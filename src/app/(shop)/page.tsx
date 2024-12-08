@@ -1,7 +1,14 @@
+import { ProductGrid, TitleComponent } from "@/components";
+import { initialData } from "@/seed/seed";
+
+const products = initialData.products;
+
 export default function ShopPage() {
+    //Home
     return (
-        <div>
-            <h1>Shop Page</h1>
-        </div>
+        <>
+            <TitleComponent title="Tienda" subtitle="Todos los productos" />
+            <ProductGrid products={products} />
+        </>
     );
 }
