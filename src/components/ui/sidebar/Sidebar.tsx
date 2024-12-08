@@ -14,6 +14,7 @@ import {
     IoShirtOutline,
     IoTicketOutline,
 } from "react-icons/io5";
+import { HSeparator } from "../hseparator/HSeparator";
 
 export const Sidebar = () => {
     const isSidebarMenuOpen = useUIState((state) => state.isSidebarMenuOpen);
@@ -77,7 +78,7 @@ export const Sidebar = () => {
                 </Link>
 
                 {/* Separator */}
-                <div className="w-full h-px bg-gray-200 my-10"></div>
+                <HSeparator className="my-10" />
 
                 <Link href="/" className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100">
                     <IoShirtOutline className="text-4xl text-gray-500 cursor-pointer" />
