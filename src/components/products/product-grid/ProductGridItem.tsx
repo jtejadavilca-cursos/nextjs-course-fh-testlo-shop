@@ -1,12 +1,12 @@
 "use client";
 
-import { Product } from "@/interfaces";
+import { ProductDomain } from "@/interfaces";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
 interface Props {
-    product: Product;
+    product: ProductDomain;
 }
 
 export const ProductGridItem = ({ product }: Props) => {

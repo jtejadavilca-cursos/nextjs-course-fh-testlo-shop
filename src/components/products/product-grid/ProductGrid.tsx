@@ -1,10 +1,9 @@
-import { Product } from "@/interfaces";
-import Image from "next/image";
+import { ProductDomain } from "@/interfaces";
 import React from "react";
 import { ProductGridItem } from "./ProductGridItem";
 
 interface Props {
-    products: Product[];
+    products: ProductDomain[];
 }
 
 export const ProductGrid = ({ products }: Props) => {
