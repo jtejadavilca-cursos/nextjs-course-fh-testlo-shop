@@ -1,3 +1,5 @@
+export const revalidate = 60; // 60 segundos
+
 import { redirect } from "next/navigation";
 
 import { getPaginatedProductsWithImages } from "@/actions";
@@ -30,7 +32,7 @@ export default async function ShopPage({ searchParams }: Props) {
             )} */}
             <TitleComponent title="Tienda" subtitle="Todos los productos" />
 
-            {totalPages > 1 && <Pagination page={currentPage} totalPages={totalPages} />}
+            {totalPages > 1 && <Pagination totalPages={totalPages} />}
             <ProductGrid products={products} />
         </>
     );

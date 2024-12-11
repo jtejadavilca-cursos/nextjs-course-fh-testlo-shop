@@ -1,19 +1,20 @@
+export const revalidate = 60; // 60 segundos
+
+import { notFound, redirect } from "next/navigation";
 import { getPaginatedProductsWithImages } from "@/actions";
 import { Pagination, ProductGrid, TitleComponent } from "@/components";
-import { Category } from "@/interfaces";
-import { notFound, redirect } from "next/navigation";
 
 interface Props {
-    params: Promise<{ id: Category }>;
+    params: Promise<{ gender: string }>;
     searchParams: {
         page: string;
     };
 }
 
 export default async function CategoryPage({ params, searchParams }: Props) {
-    const { id } = await params;
+    const { gender } = await params;
 
-    if (!["men", "women", "kid", "unisex"].includes(id)) {
+    if (!["men", "women", "kid", "unisex"].includes(gender)) {
         notFound();
     }
 
@@ -23,14 +24,14 @@ export default async function CategoryPage({ params, searchParams }: Props) {
     const { products, totalPages, currentPage } = await getPaginatedProductsWithImages({
         page: noPage ? 1 : page,
         limit: 12,
-        category: id,
+        gender: gender,
     });
 
     if (!noPage && products.length === 0) {
-        redirect(`/category/${id}`);
+        redirect(`/gender/${gender}`);
     }
 
-    const labels: Record<Category, string> = {
+    const labels: Record<string, string> = {
         women: "Mujeres",
         men: "Hombres",
         kid: "Niños",
@@ -39,9 +40,9 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
     return (
         <>
-            <TitleComponent title="Tienda" subtitle={`Productos para ${labels[id]}`} />
+            <TitleComponent title="Tienda" subtitle={`Productos para ${labels[gender]}`} />
 
-            {totalPages > 1 && <Pagination page={currentPage} totalPages={totalPages} />}
+            {totalPages > 1 && <Pagination totalPages={totalPages} />}
             <ProductGrid products={products} />
         </>
     );

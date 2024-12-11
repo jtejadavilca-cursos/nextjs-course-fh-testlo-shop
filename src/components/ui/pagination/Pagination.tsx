@@ -8,7 +8,6 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
 
 interface Props {
-    page: number;
     totalPages: number;
 }
 
