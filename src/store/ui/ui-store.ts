@@ -10,6 +10,6 @@ interface UIState {
 export const useUIState = create<UIState>((set) => ({
     isSidebarMenuOpen: false,
 
-    openSidebarMenu: () => set((state) => ({ isSidebarMenuOpen: true })),
-    closeSidebarMenu: () => set((state) => ({ isSidebarMenuOpen: false })),
+    openSidebarMenu: () => set(() => ({ isSidebarMenuOpen: true })),
+    closeSidebarMenu: () => set(() => ({ isSidebarMenuOpen: false })),
 }));

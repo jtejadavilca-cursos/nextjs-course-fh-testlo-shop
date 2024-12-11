@@ -6,9 +6,9 @@ import { Pagination, ProductGrid, TitleComponent } from "@/components";
 
 interface Props {
     params: Promise<{ gender: string }>;
-    searchParams: {
+    searchParams: Promise<{
         page: string;
-    };
+    }>;
 }
 
 export default async function CategoryPage({ params, searchParams }: Props) {
@@ -21,7 +21,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
     const page = parseInt((await searchParams).page);
     const noPage = isNaN(page) || page < 1;
 
-    const { products, totalPages, currentPage } = await getPaginatedProductsWithImages({
+    const { products, totalPages } = await getPaginatedProductsWithImages({
         page: noPage ? 1 : page,
         limit: 12,
         gender: gender,

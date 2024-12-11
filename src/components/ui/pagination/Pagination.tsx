@@ -2,7 +2,6 @@
 
 import { generatePaginationNumbers } from "@/utils";
 import clsx from "clsx";
-import { link } from "fs";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";

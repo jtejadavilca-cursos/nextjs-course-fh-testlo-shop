@@ -1,25 +1,7 @@
-// interface Props {
-//     params: Promise<{ id: string }>;
-//     // searchParams: {
-//     //     limit: string;
-//     // };
-// }
-
-// export default async function OrderIdPage({ params }: Props) {
-//     const { id } = await params;
-
-//     return (
-//         <div>
-//             <h1>OrderId Page #{id}</h1>
-//         </div>
-//     );
-// }
-
-import { HSeparator, QuantitySelector, TitleComponent } from "@/components";
+import { HSeparator, TitleComponent } from "@/components";
 import { initialData } from "@/seed/seed";
 import clsx from "clsx";
 import Image from "next/image";
-import Link from "next/link";
 import { IoCardOutline } from "react-icons/io5";
 
 const productsInCart = [

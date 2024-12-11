@@ -2,6 +2,6 @@
 
 import { PageNotFound } from "@/components";
 
-export default function () {
+export default function Error() {
     return <PageNotFound />;
 }
