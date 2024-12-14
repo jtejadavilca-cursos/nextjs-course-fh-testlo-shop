@@ -23,20 +23,18 @@ export const StockLabel = ({ slug }: Props) => {
     };
 
     return (
-        <div className="flex gap-2">
-            <small className={`${titleFont.className} antialiased font-bold text-slate-700 `}>{"("}Stock: </small>
+        <div className="flex justify-between w-28">
             {!isLoading ? (
                 <small className={`${titleFont.className} antialiased font-bold  text-center text-slate-700 `}>
-                    {stock}
+                    {`(Stock: ${stock})`}
                 </small>
             ) : (
                 <small
-                    className={`${titleFont.className} block antialiased font-bold w-5 text-slate-700 bg-gray-200 animate-pulse`}
+                    className={`${titleFont.className} block antialiased font-bold w-full text-slate-700 bg-gray-200 animate-pulse`}
                 >
                     &nbsp;
                 </small>
             )}
-            <small className={`${titleFont.className} antialiased font-bold text-slate-700 `}>{")"}</small>
         </div>
     );
 };

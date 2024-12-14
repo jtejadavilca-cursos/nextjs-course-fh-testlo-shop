@@ -1,3 +1,5 @@
+export * from "./cart/ProductsInCart";
+export * from "./cart/OrderSummary";
 export * from "./footer/Footer";
 export * from "./product/quantity-selector/QuantitySelector";
 export * from "./product/size-selector/SizeSelector";

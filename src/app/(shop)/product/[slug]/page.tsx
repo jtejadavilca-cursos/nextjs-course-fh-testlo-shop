@@ -5,6 +5,7 @@ import { ProductMobileSlideshow, ProductSlideshow, QuantitySelector, SizeSelecto
 import { titleFont } from "@/config/fonts";
 import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
+import { AddToCard } from "./ui/AddToCard";
 
 interface Props {
     params: Promise<{ slug: string }>;
@@ -62,13 +63,7 @@ export default async function PrductSlugPage({ params }: Props) {
 
                 <p className="text-lg mb-5">${product.price}</p>
 
-                {/* Selector de tallas */}
-                <SizeSelector availableSizes={product.sizes} selectedSize="S" />
-                {/* Selector de cantidad */}
-                <QuantitySelector quantity={2} />
-
-                {/* Button Add */}
-                <button className="btn-primary my-5">Agregar al carrito</button>
+                <AddToCard product={product} />
 
                 {/* Descripción */}
                 <h3 className="font-bold text-sm">Descripción</h3>
