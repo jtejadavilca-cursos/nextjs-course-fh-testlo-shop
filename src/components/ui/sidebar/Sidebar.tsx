@@ -15,10 +15,18 @@ import {
     IoTicketOutline,
 } from "react-icons/io5";
 import { HSeparator } from "../hseparator/HSeparator";
+import { logout } from "@/actions";
+import { useSession } from "next-auth/react";
 
 export const Sidebar = () => {
     const isSidebarMenuOpen = useUIState((state) => state.isSidebarMenuOpen);
     const closeSidebarMenu = useUIState((state) => state.closeSidebarMenu);
+
+    const { data: session } = useSession();
+    const user = session?.user;
+    const isAuthenticated = !!user;
+    const isAdmin = isAuthenticated && user?.role === "ADMIN";
+    const isUser = isAuthenticated && user?.role === "USER";
 
     const handleCloseSidebarMenu = () => {
         closeSidebarMenu();
@@ -60,40 +68,86 @@ export const Sidebar = () => {
                 </div>
 
                 {/* Menú */}
-                <Link href="/" className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100">
-                    <IoPersonOutline className="text-4xl text-gray-500 cursor-pointer" />
-                    <span className="ml-5 text-lg">Perfil</span>
-                </Link>
-                <Link href="/" className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100">
-                    <IoTicketOutline className="text-4xl text-gray-500 cursor-pointer" />
-                    <span className="ml-5 text-lg">Órdenes</span>
-                </Link>
-                <Link href="/" className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100">
-                    <IoLogInOutline className="text-4xl text-gray-500 cursor-pointer" />
-                    <span className="ml-5 text-lg">Ingresar</span>
-                </Link>
-                <Link href="/" className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100">
-                    <IoLogOutOutline className="text-4xl text-gray-500 cursor-pointer" />
-                    <span className="ml-5 text-lg">Salir</span>
-                </Link>
+                {isUser && (
+                    <Link
+                        href="/profile"
+                        className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100"
+                        onClick={handleCloseSidebarMenu}
+                    >
+                        <IoPersonOutline className="text-4xl text-gray-500 cursor-pointer" />
+                        <span className="ml-5 text-lg">Perfil</span>
+                    </Link>
+                )}
+                {isUser && (
+                    <Link
+                        href="/"
+                        className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100"
+                        onClick={handleCloseSidebarMenu}
+                    >
+                        <IoTicketOutline className="text-4xl text-gray-500 cursor-pointer" />
+                        <span className="ml-5 text-lg">Órdenes</span>
+                    </Link>
+                )}
+
+                {!isAuthenticated && (
+                    <Link
+                        href="/auth/login"
+                        className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100"
+                        onClick={handleCloseSidebarMenu}
+                    >
+                        <IoLogInOutline className="text-4xl text-gray-500 cursor-pointer" />
+                        <span className="ml-5 text-lg">Ingresar</span>
+                    </Link>
+                )}
+
+                {isAuthenticated && (
+                    <button
+                        className="flex w-full items-center mt-10 p-2 rounded transition-all hover:bg-gray-100"
+                        onClick={() => {
+                            handleCloseSidebarMenu();
+                            logout();
+                        }}
+                    >
+                        <IoLogOutOutline className="text-4xl text-gray-500 cursor-pointer" />
+                        <span className="ml-5 text-lg">Salir</span>
+                    </button>
+                )}
 
                 {/* Separator */}
                 <HSeparator className="my-10" />
 
-                <Link href="/" className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100">
-                    <IoShirtOutline className="text-4xl text-gray-500 cursor-pointer" />
-                    <span className="ml-5 text-lg">Products</span>
-                </Link>
+                {isAdmin && (
+                    <Link
+                        href="/"
+                        className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100"
+                        onClick={handleCloseSidebarMenu}
+                    >
+                        <IoShirtOutline className="text-4xl text-gray-500 cursor-pointer" />
+                        <span className="ml-5 text-lg">Products</span>
+                    </Link>
+                )}
 
-                <Link href="/" className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100">
-                    <IoTicketOutline className="text-4xl text-gray-500 cursor-pointer" />
-                    <span className="ml-5 text-lg">Órdenes</span>
-                </Link>
+                {isAdmin && (
+                    <Link
+                        href="/"
+                        className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100"
+                        onClick={handleCloseSidebarMenu}
+                    >
+                        <IoTicketOutline className="text-4xl text-gray-500 cursor-pointer" />
+                        <span className="ml-5 text-lg">Órdenes</span>
+                    </Link>
+                )}
 
-                <Link href="/" className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100">
-                    <IoPeopleOutline className="text-4xl text-gray-500 cursor-pointer" />
-                    <span className="ml-5 text-lg">Usuarios</span>
-                </Link>
+                {isAdmin && (
+                    <Link
+                        href="/"
+                        className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100"
+                        onClick={handleCloseSidebarMenu}
+                    >
+                        <IoPeopleOutline className="text-4xl text-gray-500 cursor-pointer" />
+                        <span className="ml-5 text-lg">Usuarios</span>
+                    </Link>
+                )}
             </nav>
         </div>
     );

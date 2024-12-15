@@ -4,13 +4,17 @@ import prisma from "../lib/prisma";
 async function seedDatabase() {
     console.log("Seeding database...");
     // Step 1: Delete all data (one by one because of FK constraints)
+    await prisma.user.deleteMany();
     await prisma.productImage.deleteMany();
     await prisma.product.deleteMany();
     await prisma.category.deleteMany();
 
-    const { categories, products } = initialData;
+    const { categories, products, users } = initialData;
 
-    // Step 2: Insert categories
+    // Step 2: Insert users
+    await prisma.user.createMany({ data: users });
+
+    // Step 3: Insert categories
     const categoriesData = categories.map((c) => ({ name: c }));
     await prisma.category.createMany({ data: categoriesData });
 
@@ -20,7 +24,7 @@ async function seedDatabase() {
         return map;
     }, {} as Record<string, string>);
 
-    // Step 3: Insert products
+    // Step 4: Insert products
     products.forEach(async (p) => {
         const { images, type, ...prod } = p;
         const dbProduct = await prisma.product.create({
@@ -30,7 +34,7 @@ async function seedDatabase() {
             },
         });
 
-        // Step 4: Insert images by product
+        // Step 5: Insert images by product
         const dbImages = images.map((img) => ({
             url: img,
             productId: dbProduct.id,

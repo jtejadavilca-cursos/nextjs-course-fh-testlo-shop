@@ -1,5 +1,5 @@
-export * from "./cart/ProductsInCart";
 export * from "./cart/OrderSummary";
+export * from "./cart/ProductsInCart";
 export * from "./footer/Footer";
 export * from "./product/quantity-selector/QuantitySelector";
 export * from "./product/size-selector/SizeSelector";
@@ -8,6 +8,7 @@ export * from "./product/slideshow/ProductSlideshow";
 export * from "./product/stock-label/StockLabel";
 export * from "./products/product-grid/ProductGrid";
 export * from "./products/product-grid/ProductGridItem";
+export * from "./provider/Provider";
 export * from "./ui/hseparator/HSeparator";
 export * from "./ui/not-found/PageNotFound";
 export * from "./ui/pagination/Pagination";
