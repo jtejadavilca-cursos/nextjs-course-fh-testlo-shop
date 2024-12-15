@@ -17,8 +17,15 @@ import {
 import { HSeparator } from "../hseparator/HSeparator";
 import { logout } from "@/actions";
 import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 export const Sidebar = () => {
+    // get query param:
+    const searchParams = useSearchParams();
+    if (searchParams.has("auth")) {
+        window.location.replace("/");
+    }
+
     const isSidebarMenuOpen = useUIState((state) => state.isSidebarMenuOpen);
     const closeSidebarMenu = useUIState((state) => state.closeSidebarMenu);
 
