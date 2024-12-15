@@ -1,9 +1,9 @@
 export const revalidate = 604800;
 
 import { getProductBySlug } from "@/actions";
-import { ProductMobileSlideshow, ProductSlideshow, QuantitySelector, SizeSelector, StockLabel } from "@/components";
+import { ProductMobileSlideshow, ProductSlideshow, StockLabel } from "@/components";
 import { titleFont } from "@/config/fonts";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { AddToCard } from "./ui/AddToCard";
 
@@ -14,13 +14,14 @@ interface Props {
     // };
 }
 
-export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // read route params
     const { slug } = await params;
 
     // fetch data
     const product = await getProductBySlug(slug);
 
+    // If needed, parent comes as parameter: , parent: ResolvingMetadata
     // optionally access and extend (rather than replace) parent metadata
     //const previousImages = (await parent).openGraph?.images || []
 

@@ -1,13 +1,11 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
 //import { useFormState } from "react-dom";
 import { useActionState } from "react";
 
 import { authenticate } from "@/actions";
 import { IoInformationOutline } from "react-icons/io5";
 import clsx from "clsx";
-import { useSession } from "next-auth/react";
 
 export const LoginForm = () => {
     const [errorMessage, dispatch, isPending] = useActionState(authenticate, undefined);

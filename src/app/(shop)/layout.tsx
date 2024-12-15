@@ -1,6 +1,4 @@
-import { auth } from "@/auth.config";
 import { Footer, Sidebar, TopMenu } from "@/components";
-import { redirect } from "next/navigation";
 
 export default async function ShopLayout({ children }: { children: React.ReactNode }) {
     return (
