@@ -11,5 +11,6 @@ This is a simple e-commerce website that allows users to view products, add them
 3. Run `npm install` to install the dependencies
 4. Run `docker compose up -d` to start the PostgreSQL database
 5. Run migrations using `npx prisma migrate dev`
-6. Run `npm run seed` to populate the database with mock data
-7. Run `npm run dev` to start the development server
+6. If change something in the schema, run `npx prisma generate` to generate the new client
+7. Run `npm run seed` to populate the database with mock data
+8. Run `npm run dev` to start the development server

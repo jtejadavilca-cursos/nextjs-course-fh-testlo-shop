@@ -21,6 +21,12 @@ export const authConfig: NextAuthConfig = {
             session.user = token.data as any;
             return session;
         },
+
+        authorized({ auth, request: { nextUrl } }) {
+            //console.log("authorized", auth);
+
+            return true;
+        },
     },
     providers: [
         Credentials({

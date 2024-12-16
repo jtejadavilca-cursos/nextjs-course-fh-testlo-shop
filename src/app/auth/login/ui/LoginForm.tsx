@@ -13,22 +13,10 @@ export const LoginForm = () => {
     return (
         <form action={dispatch} className="flex flex-col">
             <label htmlFor="email">Correo electrónico</label>
-            <input
-                className="px-5 py-2 border bg-gray-200 rounded mb-5"
-                type="email"
-                value="user1@gmail.com"
-                name="email"
-                onChange={() => {}}
-            />
+            <input className="px-5 py-2 border bg-gray-200 rounded mb-5" type="email" name="email" />
 
             <label htmlFor="email">Contraseña</label>
-            <input
-                className="px-5 py-2 border bg-gray-200 rounded mb-5"
-                value="123456"
-                type="password"
-                name="password"
-                onChange={() => {}}
-            />
+            <input className="px-5 py-2 border bg-gray-200 rounded mb-5" type="password" name="password" />
 
             {errorMessage && (
                 <div className="flex h-8 items-end space-x-1 mb-2" aria-live="polite" aria-atomic="true">
@@ -52,7 +40,7 @@ export const LoginForm = () => {
                 <div className="flex-1 border-t border-gray-500"></div>
             </div>
 
-            <Link href="/auth/register" className="btn-secondary text-center">
+            <Link href="/auth/new-account" className="btn-secondary text-center">
                 Crear una nueva cuenta
             </Link>
         </form>
