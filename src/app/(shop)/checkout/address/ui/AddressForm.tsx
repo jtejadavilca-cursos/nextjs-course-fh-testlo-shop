@@ -3,6 +3,8 @@
 import clsx from "clsx";
 import { useForm } from "react-hook-form";
 import { Country } from "@/interfaces";
+import { useAddressStore } from "@/store";
+import { useEffect } from "react";
 
 type FormInput = {
     firstName: string;
@@ -25,6 +27,7 @@ export const AddressForm = ({ countries }: Props) => {
         handleSubmit,
         register,
         formState: { isValid },
+        reset,
     } = useForm<FormInput>({
         defaultValues: {
             //TODO: Read values from DB
@@ -40,8 +43,27 @@ export const AddressForm = ({ countries }: Props) => {
         },
     });
 
+    const setAddress = useAddressStore((state) => state.setAddress);
+    const address = useAddressStore((state) => state.address);
+
+    useEffect(() => {
+        reset(address);
+    }, [address]);
+
     const onSubmit = (data: FormInput) => {
         console.log("data", data);
+
+        setAddress({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            address: data.address,
+            address2: data.address2 ?? "",
+            postalCode: data.postalCode,
+            city: data.city,
+            country: data.country,
+            phone: data.phone,
+            userId: "1",
+        });
     };
 
     return (
