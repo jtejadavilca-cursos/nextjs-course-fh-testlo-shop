@@ -1,9 +1,9 @@
-export interface Country {
+export interface SeedCountry {
     name: string;
     id: string;
 }
 
-export const countries: Country[] = [
+export const countries: SeedCountry[] = [
     { name: "Afghanistan", id: "AF" },
     { name: "Aland Islands", id: "AX" },
     { name: "Albania", id: "AL" },
