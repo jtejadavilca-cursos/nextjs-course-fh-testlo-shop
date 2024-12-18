@@ -2,11 +2,12 @@
 
 import clsx from "clsx";
 import { useForm } from "react-hook-form";
-import { Country } from "@/interfaces";
+import { Address, Country } from "@/interfaces";
 import { useAddressStore } from "@/store";
 import { useEffect } from "react";
 import { deleteUserAddress, setUserAddress } from "@/actions";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type FormInput = {
     firstName: string;
@@ -22,9 +23,11 @@ type FormInput = {
 
 interface Props {
     countries: Country[];
+    userAddressStored?: Partial<Address>;
 }
 
-export const AddressForm = ({ countries }: Props) => {
+export const AddressForm = ({ countries, userAddressStored = {} }: Props) => {
+    const router = useRouter();
     const {
         handleSubmit,
         register,
@@ -32,15 +35,7 @@ export const AddressForm = ({ countries }: Props) => {
         reset,
     } = useForm<FormInput>({
         defaultValues: {
-            //TODO: Read values from DB
-            firstName: "",
-            lastName: "",
-            address: "",
-            address2: "",
-            postalCode: "",
-            city: "",
-            country: "",
-            phone: "",
+            ...userAddressStored,
             rememberAddress: false,
         },
     });
@@ -51,8 +46,16 @@ export const AddressForm = ({ countries }: Props) => {
     const address = useAddressStore((state) => state.address);
 
     useEffect(() => {
-        reset(address);
-    }, [address]);
+        if (userAddressStored && userAddressStored.firstName) {
+            setAddress({ ...userAddressStored } as Address);
+        }
+    }, [userAddressStored]);
+
+    useEffect(() => {
+        if (address.firstName) {
+            reset(address);
+        }
+    }, []);
 
     const onSubmit = async (data: FormInput) => {
         setAddress({
@@ -74,9 +77,8 @@ export const AddressForm = ({ countries }: Props) => {
             resp = await deleteUserAddress(sessionData!.user.id);
         }
 
-        if (resp?.success) {
-            console.log(resp.message);
-        }
+        console.log(resp.message);
+        router.push("/checkout");
     };
 
     return (
@@ -169,11 +171,6 @@ export const AddressForm = ({ countries }: Props) => {
                             type="checkbox"
                             className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"
                             id="checkbox"
-                            checked={false}
-                            onChange={(e) => {
-                                console.log("e.target.checked", e.target.checked);
-                                e.target.checked = !e.target.checked;
-                            }}
                         />
                         <div className="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100">
                             <svg
