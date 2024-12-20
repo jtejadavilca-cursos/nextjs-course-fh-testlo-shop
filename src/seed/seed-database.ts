@@ -4,6 +4,11 @@ import prisma from "../lib/prisma";
 async function seedDatabase() {
     console.log("Seeding database...");
     // Step 1: Delete all data (one by one because of FK constraints)
+
+    await prisma.orderAddress.deleteMany();
+    await prisma.orderItem.deleteMany();
+    await prisma.order.deleteMany();
+
     await prisma.country.deleteMany();
     await prisma.user.deleteMany();
     await prisma.productImage.deleteMany();
