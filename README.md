@@ -13,4 +13,5 @@ This is a simple e-commerce website that allows users to view products, add them
 5. Run migrations using `npx prisma migrate dev`
 6. If change something in the schema, run `npx prisma generate` to generate the new client
 7. Run `npm run seed` to populate the database with mock data
-8. Run `npm run dev` to start the development server
+8. Clean localStorage in the browser because after the seed, IDs are different
+9. Run `npm run dev` to start the development server
