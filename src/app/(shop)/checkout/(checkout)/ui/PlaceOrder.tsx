@@ -1,19 +1,24 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import clsx from "clsx";
+
+import { placeOrder } from "@/actions";
 import { HSeparator } from "@/components";
 import { useAddressStore, useCartStore } from "@/store";
-import { currencyFormat, sleep } from "@/utils";
-import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { currencyFormat } from "@/utils";
 
 export const PlaceOrder = () => {
+    const router = useRouter();
     const [isLoaded, setIsLoaded] = useState(false);
     const [isPlacingOrder, setIsPlacingOrder] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState(null);
 
     const address = useAddressStore((state) => state.address);
 
     const cart = useCartStore((state) => state.cart);
+    const clearCart = useCartStore((state) => state.clearCart);
     const { getSummaryInformation } = useCartStore();
     const { itemsInCart, subTotalAmount, taxes, totalAmount } = getSummaryInformation();
 
@@ -33,14 +38,15 @@ export const PlaceOrder = () => {
             size: product.size,
         }));
 
-        console.log({ productsToOrder });
+        const resp = await placeOrder(productsToOrder, address);
+        if (!resp.success) {
+            setError(resp.message);
+            setIsPlacingOrder(false);
+            return;
+        }
 
-        await sleep(3);
-
-        setIsPlacingOrder(false);
-        setError(true);
-        await sleep(3);
-        setError(false);
+        clearCart();
+        router.replace(`/orders/${resp.order?.id}`);
     };
 
     if (!isLoaded) {
@@ -114,7 +120,7 @@ export const PlaceOrder = () => {
                     </button>
                 </div>
 
-                {error && <p className="text-red-500 mt-5 ">Error registrando la orden...</p>}
+                {error && <p className="text-red-500 mt-5 ">{error}</p>}
             </div>
         </>
     );
