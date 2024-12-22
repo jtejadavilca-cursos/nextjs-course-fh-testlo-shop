@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { IoCardOutline } from "react-icons/io5";
 
 import { getOrderById } from "@/actions";
-import { HSeparator, TitleComponent } from "@/components";
+import { HSeparator, OrderStatus, PayPalButton, TitleComponent } from "@/components";
 import { currencyFormat } from "@/utils";
 
 interface Props {
@@ -29,23 +29,8 @@ export default async function OrderIdPage({ params }: Props) {
                     {/* Carrito */}
 
                     <div className="flex flex-col mt-5">
-                        <div
-                            className={clsx(
-                                "flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-white mb-5",
-                                {
-                                    "bg-red-500": !order.isPaid,
-                                    "bg-green-700": order.isPaid,
-                                }
-                            )}
-                        >
-                            <IoCardOutline className="text-2xl" />
-                            {order.isPaid ? (
-                                <span className="mx-2">Pagada</span>
-                            ) : (
-                                <span className="mx-2">Pendiente</span>
-                            )}
-                        </div>
-
+                        {/* Order Status */}
+                        <OrderStatus isOrderPaid={order.isPaid} />
                         {/* Items */}
 
                         {order.items.map((item) => (
@@ -122,23 +107,11 @@ export default async function OrderIdPage({ params }: Props) {
                         </div>
 
                         <div className="mt-5 w-full">
-                            <div
-                                className={clsx(
-                                    "flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-white mb-5",
-                                    {
-                                        "bg-red-500": !order.isPaid,
-                                        "bg-green-700": order.isPaid,
-                                    }
-                                )}
-                            >
-                                <IoCardOutline className="text-2xl" />
-
-                                {order.isPaid ? (
-                                    <span className="mx-2">Pagada</span>
-                                ) : (
-                                    <span className="mx-2">Pendiente</span>
-                                )}
-                            </div>
+                            {order.isPaid ? (
+                                <OrderStatus isOrderPaid={true} />
+                            ) : (
+                                <PayPalButton orderId={order.id} amout={order.total} currency={"EUR"} />
+                            )}
                         </div>
                     </div>
                 </div>

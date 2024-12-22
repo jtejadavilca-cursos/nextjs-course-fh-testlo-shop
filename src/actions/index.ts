@@ -7,6 +7,8 @@ export * from "./countries/get-countries";
 export * from "./order/get-order-by-id";
 export * from "./order/get-orders-by-user";
 export * from "./order/place-order";
+export * from "./payments/paypal-check-payment";
+export * from "./payments/save-transaction-id";
 export * from "./products/get-product-by-slug";
 export * from "./products/get-stock-by-slug";
 export * from "./products/product-pagination";
