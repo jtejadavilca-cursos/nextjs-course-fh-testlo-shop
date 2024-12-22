@@ -3,7 +3,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import { IoCardOutline } from "react-icons/io5";
 
-import { getOrderById } from "@/actions/order/get-order-by-id";
+import { getOrderById } from "@/actions";
 import { HSeparator, TitleComponent } from "@/components";
 import { currencyFormat } from "@/utils";
 
