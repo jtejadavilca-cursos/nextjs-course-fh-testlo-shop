@@ -36,7 +36,7 @@ export const AddressForm = ({ countries, userAddressStored = {} }: Props) => {
     } = useForm<FormInput>({
         defaultValues: {
             ...userAddressStored,
-            rememberAddress: false,
+            rememberAddress: true,
         },
     });
 
