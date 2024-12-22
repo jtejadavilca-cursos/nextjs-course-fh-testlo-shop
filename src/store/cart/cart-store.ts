@@ -15,6 +15,7 @@ interface CartState {
     addProductToCart: (product: CartProduct) => void;
     updateProductQuantity: (product: CartProduct, quantity: number) => void;
     removeProductFromCart: (product: CartProduct) => void;
+    clearCart: () => void;
 }
 
 export const useCartStore = create<CartState>()(
@@ -62,17 +63,13 @@ export const useCartStore = create<CartState>()(
                     ),
                 })),
             removeProductFromCart: (product) => {
-                // const currentCart = get().cart;
-                // console.log("current cart", currentCart);
-                // console.log("remove product", product);
-                // set((state) => ({ cart: state.cart.filter((p) => p.id !== product.id && p.size !== product.size) }));
-
                 const { cart } = get();
 
                 const updatedCart = cart.filter((p) => p.id !== product.id || p.size !== product.size);
 
                 set({ cart: updatedCart });
             },
+            clearCart: () => set({ cart: [] }),
         }),
         { name: "shopping-cart" }
     )
