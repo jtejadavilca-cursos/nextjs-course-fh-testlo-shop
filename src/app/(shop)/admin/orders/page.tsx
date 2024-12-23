@@ -6,10 +6,10 @@ import clsx from "clsx";
 
 // https://tailwindcomponents.com/component/hoverable-table
 import { TitleComponent } from "@/components";
-import { getOrdersByUser } from "@/actions";
+import { getPaginatedOrdersByAdmin } from "@/actions";
 
 export default async function OrdersAdminPage() {
-    const orders = await getOrdersByUser();
+    const orders = await getPaginatedOrdersByAdmin();
 
     return (
         <>
