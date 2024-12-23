@@ -1,6 +1,6 @@
 "use client";
 
-import { useUIState } from "@/store";
+import { useAddressStore, useCartStore, useUIState } from "@/store";
 import clsx from "clsx";
 import Link from "next/link";
 import React from "react";
@@ -28,6 +28,8 @@ export const Sidebar = () => {
 
     const isSidebarMenuOpen = useUIState((state) => state.isSidebarMenuOpen);
     const closeSidebarMenu = useUIState((state) => state.closeSidebarMenu);
+    const clearCart = useCartStore((state) => state.clearCart);
+    const clearAddress = useAddressStore((state) => state.clearAddress);
 
     const { data: session } = useSession();
     const user = session?.user;
@@ -37,6 +39,13 @@ export const Sidebar = () => {
 
     const handleCloseSidebarMenu = () => {
         closeSidebarMenu();
+    };
+
+    const handleLogout = () => {
+        handleCloseSidebarMenu();
+        clearCart();
+        clearAddress();
+        logout();
     };
 
     return (
@@ -110,10 +119,7 @@ export const Sidebar = () => {
                 {isAuthenticated && (
                     <button
                         className="flex w-full items-center mt-10 p-2 rounded transition-all hover:bg-gray-100"
-                        onClick={() => {
-                            handleCloseSidebarMenu();
-                            logout();
-                        }}
+                        onClick={handleLogout}
                     >
                         <IoLogOutOutline className="text-4xl text-gray-500 cursor-pointer" />
                         <span className="ml-5 text-lg">Salir</span>
@@ -136,7 +142,7 @@ export const Sidebar = () => {
 
                 {isAdmin && (
                     <Link
-                        href="/"
+                        href="/admin/orders"
                         className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100"
                         onClick={handleCloseSidebarMenu}
                     >
