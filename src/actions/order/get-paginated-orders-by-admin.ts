@@ -3,15 +3,15 @@
 import { auth } from "@/auth.config";
 import prisma from "@/lib/prisma";
 
-export const getOrdersByUser = async () => {
+export const getPaginatedOrdersByAdmin = async () => {
     try {
         const session = await auth();
-        const userId = session?.user.id;
+        const role = session?.user.role;
+        if (role !== "ADMIN") {
+            throw new Error("You are not authorized to perform this action");
+        }
 
         const orders = await prisma.order.findMany({
-            where: {
-                userId,
-            },
             include: {
                 OrderItem: {
                     include: {
