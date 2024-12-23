@@ -1,9 +1,9 @@
 "use client";
 
-import { ProductDomain } from "@/interfaces";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
+import type { ProductDomain } from "@/interfaces";
 
 interface Props {
     product: ProductDomain;

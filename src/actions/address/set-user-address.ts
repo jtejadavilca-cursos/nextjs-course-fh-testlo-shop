@@ -1,7 +1,7 @@
 "use server";
 
-import { Address } from "@/interfaces";
 import prisma from "@/lib/prisma";
+import type { Address } from "@/interfaces";
 
 export const setUserAddress = async (address: Address, userId: string) => {
     try {

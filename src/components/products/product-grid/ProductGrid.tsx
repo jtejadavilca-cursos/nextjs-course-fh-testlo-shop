@@ -1,5 +1,4 @@
-import { ProductDomain } from "@/interfaces";
-import React from "react";
+import type { ProductDomain } from "@/interfaces";
 import { ProductGridItem } from "./ProductGridItem";
 
 interface Props {

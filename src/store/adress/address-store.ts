@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Address } from "@/interfaces";
+import type { Address } from "@/interfaces";
 
 interface AddressState {
     address: Address;
