@@ -153,7 +153,7 @@ export const Sidebar = () => {
 
                 {isAdmin && (
                     <Link
-                        href="/"
+                        href="/admin/users"
                         className="flex items-center mt-10 p-2 rounded transition-all hover:bg-gray-100"
                         onClick={handleCloseSidebarMenu}
                     >
