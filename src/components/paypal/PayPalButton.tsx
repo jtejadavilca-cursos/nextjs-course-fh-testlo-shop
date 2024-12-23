@@ -68,9 +68,9 @@ export const PayPalButton = (props: Props) => {
     }
 
     return (
-        <>
+        <div className="relative z-0">
             <PayPalButtons createOrder={createOrder} onApprove={onAppove} onCancel={onCancel} />
             {error && <small className="bg-red-500 text-white p-2 rounded">{error}</small>}
-        </>
+        </div>
     );
 };
