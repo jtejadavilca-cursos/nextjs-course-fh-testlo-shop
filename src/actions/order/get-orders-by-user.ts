@@ -7,10 +7,11 @@ export const getOrdersByUser = async () => {
     try {
         const session = await auth();
         const userId = session?.user.id;
+        const role = session?.user.role;
 
         const orders = await prisma.order.findMany({
             where: {
-                userId,
+                userId: role === "ADMIN" ? undefined : userId,
             },
             include: {
                 OrderItem: {

@@ -8,7 +8,7 @@ import clsx from "clsx";
 import { TitleComponent } from "@/components";
 import { getOrdersByUser } from "@/actions";
 
-export default async function OrdersPage() {
+export default async function OrdersAdminPage() {
     const orders = await getOrdersByUser();
 
     return (
