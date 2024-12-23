@@ -5,7 +5,7 @@ import { Address } from "@/interfaces";
 interface AddressState {
     address: Address;
     setAddress: (address: Address) => void;
-    // removeAddress: (address: Address) => void;
+    clearAddress: () => void;
 }
 
 export const useAddressStore = create<AddressState>()(
@@ -25,15 +25,20 @@ export const useAddressStore = create<AddressState>()(
             setAddress: (address: Address) => {
                 set(() => ({ address }));
             },
-            // addresses: [],
-            // addAddress: (address: Address) => {
-            //     set((state) => ({ addresses: [...state.addresses, address] }));
-            // },
-            // removeAddress: (address: Address) => {
-            //     set((state) => ({
-            //         addresses: state.addresses.filter((a) => a.id !== address.id),
-            //     }));
-            // },
+            clearAddress: () => {
+                set({
+                    address: {
+                        firstName: "",
+                        lastName: "",
+                        address: "",
+                        address2: "",
+                        city: "",
+                        country: "",
+                        postalCode: "",
+                        phone: "",
+                    },
+                });
+            },
         }),
         { name: "address-store" }
     )
