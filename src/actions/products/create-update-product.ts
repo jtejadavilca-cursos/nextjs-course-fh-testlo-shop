@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { Gender } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { uploadProductImages } from "./upload-product-images";
 
 const productSchema = z.object({
     id: z.string().uuid().optional().nullable(),
@@ -71,6 +72,24 @@ export const createUpdateProduct = async (formData: FormData) => {
                   },
               });
 
+        // Upload and save images
+        const hastImages = formData.has("images");
+        console.log(hastImages ? "Uploading images..." : "No images to upload");
+        if (formData.has("images")) {
+            const images = await uploadProductImages(formData.getAll("images") as File[]);
+            if (!images) {
+                throw new Error("Error uploading images, rolling back transaction");
+            }
+
+            //Saving images
+            await prisma.productImage.createMany({
+                data: images.map((image) => ({
+                    url: image,
+                    productId: productSaved.id,
+                })),
+            });
+        }
+
         return {
             data: productSaved,
         };
@@ -78,7 +97,7 @@ export const createUpdateProduct = async (formData: FormData) => {
 
     revalidatePath("/admin/products");
     revalidatePath(`/admin/product/${prismaTx.data.slug}`);
-    revalidatePath(`/products/${prismaTx.data.slug}`);
+    revalidatePath(`/product/${prismaTx.data.slug}`);
 
     return {
         success: true,

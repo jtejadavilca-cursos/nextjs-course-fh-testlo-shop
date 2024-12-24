@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import clsx from "clsx";
 import { CategoryDomain, ProductDomain, ProductImageDomain } from "@/interfaces";
-import { createUpdateProduct } from "@/actions";
+import { createUpdateProduct, deleteProductImage } from "@/actions";
 import { ProductImage } from "@/components";
 import { useRouter } from "next/navigation";
 
@@ -27,6 +27,7 @@ interface FormInputs {
     categoryId: string;
 
     //TODO: Images
+    images?: FileList;
 }
 
 export const ProductForm = ({ product, categories }: Props) => {
@@ -43,6 +44,7 @@ export const ProductForm = ({ product, categories }: Props) => {
             ...product,
             sizes: product?.sizes ?? [],
             tags: (product?.tags ?? [""]).join(", "),
+            images: undefined,
         },
     });
 
@@ -54,7 +56,7 @@ export const ProductForm = ({ product, categories }: Props) => {
     };
 
     const onSubmit = async (data: FormInputs) => {
-        const { ...productToSave } = data;
+        const { images, ...productToSave } = data;
 
         const formData = new FormData();
         if (product?.id) {
@@ -70,12 +72,27 @@ export const ProductForm = ({ product, categories }: Props) => {
         formData.append("categoryId", productToSave.categoryId);
         formData.append("gender", productToSave.gender);
 
+        if (images) {
+            for (let i = 0; i < images.length; i++) {
+                formData.append("images", images[i]);
+            }
+        }
+
         const resp = await createUpdateProduct(formData);
         if (resp.success) {
             console.log("Product saved successfully");
             router.replace(`/admin/product/${resp.product?.slug}`);
         } else {
             console.error(resp.error);
+        }
+    };
+
+    const onDeleteImage = async (imageId: string, imageUrl: string) => {
+        const resp = await deleteProductImage(imageId, imageUrl);
+        if (resp.success) {
+            console.log("Image deleted successfully");
+        } else {
+            console.error("Error deleting image", resp.message);
         }
     };
 
@@ -192,9 +209,10 @@ export const ProductForm = ({ product, categories }: Props) => {
                         <span>Fotos</span>
                         <input
                             type="file"
+                            {...register("images")}
                             multiple
                             className="p-2 border rounded-md bg-gray-200"
-                            accept="image/png, image/jpeg"
+                            accept="image/png, image/jpeg, image/avif"
                         />
                     </div>
 
@@ -211,7 +229,7 @@ export const ProductForm = ({ product, categories }: Props) => {
 
                                 <button
                                     type="button"
-                                    onClick={() => console.log(image.id, image.url)}
+                                    onClick={() => onDeleteImage(image.id, image.url)}
                                     className="btn-danger w-full rounded-b-xl"
                                 >
                                     Eliminar
