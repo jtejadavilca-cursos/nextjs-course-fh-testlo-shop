@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { ProductImage } from "@/components";
 import type { ProductDomain } from "@/interfaces";
 
 interface Props {
@@ -10,19 +11,15 @@ interface Props {
 }
 
 export const ProductGridItem = ({ product }: Props) => {
-    const [displayImage, setSetDisplayImage] = useState(product.images[0]);
+    //    const [displayImage, setSetDisplayImage] = useState(product.images[0]);
 
     return (
         <div key={product.slug} className="rounded-md overflow-hidden fade-in">
             <Link href={`/product/${product.slug}`}>
-                <Image
-                    width={500}
-                    height={500}
-                    src={`/products/${displayImage}`}
+                <ProductImage
+                    src={product.images[0]}
                     alt={product.title}
                     className="w-full object-cover object-center fade-in rounded"
-                    onMouseEnter={() => setSetDisplayImage(product.images[1])}
-                    onMouseLeave={() => setSetDisplayImage(product.images[0])}
                 />
             </Link>
             <div className="p-4 flex flex-col">

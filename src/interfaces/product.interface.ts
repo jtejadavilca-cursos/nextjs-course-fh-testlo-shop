@@ -1,15 +1,19 @@
 export interface ProductDomain {
     id: string;
+    title: string;
     description: string;
-    images: string[];
     inStock: number;
     price: number;
     sizes: Size[];
     slug: string;
     tags: string[];
-    title: string;
-    //todo: type: Type;
+    images: string[];
     gender: Category;
+}
+
+export interface ProductImageDomain {
+    id: string;
+    url: string;
 }
 
 export interface CartProduct {

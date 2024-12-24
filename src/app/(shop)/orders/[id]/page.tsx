@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { IoCardOutline } from "react-icons/io5";
 
 import { getOrderById } from "@/actions";
-import { HSeparator, OrderStatus, PayPalButton, TitleComponent } from "@/components";
+import { HSeparator, OrderStatus, PayPalButton, ProductImage, TitleComponent } from "@/components";
 import { currencyFormat } from "@/utils";
 
 interface Props {
@@ -35,8 +35,8 @@ export default async function OrderIdPage({ params }: Props) {
 
                         {order.items.map((item) => (
                             <div key={item.product.slug + "-" + item.size} className="flex mb-5">
-                                <Image
-                                    src={`/products/${item.product.ProductImage[0].url}`}
+                                <ProductImage
+                                    src={item.product.ProductImage[0]?.url}
                                     alt={item.product.title}
                                     width={100}
                                     height={100}
