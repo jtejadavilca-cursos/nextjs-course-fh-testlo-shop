@@ -1,4 +1,4 @@
-import { HSeparator, TitleComponent } from "@/components";
+import { TitleComponent } from "@/components";
 import Link from "next/link";
 import { ProductsInCartCheckout } from "./ui/ProductsInCartCheckout";
 import { PlaceOrder } from "./ui/PlaceOrder";

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useForm } from "react-hook-form";
 import clsx from "clsx";
 import { CategoryDomain, ProductDomain, ProductImageDomain } from "@/interfaces";
@@ -32,14 +31,7 @@ interface FormInputs {
 
 export const ProductForm = ({ product, categories }: Props) => {
     const router = useRouter();
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, isValid },
-        getValues,
-        setValue,
-        watch,
-    } = useForm<FormInputs>({
+    const { register, handleSubmit, formState, getValues, setValue, watch } = useForm<FormInputs>({
         defaultValues: {
             ...product,
             sizes: product?.sizes ?? [],
